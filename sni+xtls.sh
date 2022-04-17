@@ -145,6 +145,7 @@ sleep 1
 wget -N --no-check-certificate -q -O /html/we.dog/$UUID.yaml "https://raw.githubusercontent.com/huahsui/sni-h5ai-xtls/main/clash.yaml" && sed -i '32 i\  - {name: tcp+xtls, server: '$DOMIN', port: 443, type: vless, uuid: '$UUID', flow: xtls-rprx-direct, skip-cert-verify: false, servername: '$DOMIN'}' /html/we.dog/$UUID.yaml
 sleep 1
 
+clear
 # 开启bbr
 if [ "$ID" == "debian" ] || [ "$ID" == "ubuntu" ];then
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
@@ -156,7 +157,6 @@ echo -e "${red}未支持该系统版本，bbr启动失败，请自行启动！�
 fi
 sleep 2
 
-clear
 echo
 echo
 echo "   恭喜，你的tcp+xtls已配置成功，以下为你的clash配置"
