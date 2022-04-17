@@ -151,7 +151,7 @@ echo
 echo "----------------------------------------------------------------------------------------------------------------------------------------------"
 echo "- {name: tcp+xtls, server: $DOMIN, port: 443, type: vless, uuid: $UUID, flow: xtls-rprx-direct, skip-cert-verify: false, servername: $DOMIN}"
 echo
-echo "   clash配置文件在 https://$DOMIN/$UUID.yaml ,请直接在clash客户端中输入该网址食用！！！"
+echo "   clash配置文件在 https://$DOMIN/$UUID.yaml ,请直接在clash客户端中输入该网址食用，clash使用请用meta内核，自行谷歌"
 echo
 echo "   其他客户端请自行参考clash配置中的数据,另食用前请自行开启bbr,aria2也请自行下载，推荐逗大的脚本！"
 echo
