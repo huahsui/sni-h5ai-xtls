@@ -164,7 +164,7 @@ echo "- {name: tcp+xtls, server: $DOMIN, port: 443, type: vless, uuid: $UUID, fl
 echo
 echo "   clash配置文件在 https://$DOMIN/$UUID.yaml ,请直接在clash客户端中输入该网址食用，clash使用请用meta内核，自行谷歌"
 echo
-echo "   其他客户端请自行参考clash配置中的数据,另食用前请自行开启bbr,aria2也请自行下载，推荐逗大的脚本！"
+echo "   其他客户端请自行参考clash配置中的数据,另食用前aria2请自行下载，推荐逗大的脚本！"
 echo
 echo "   对了你的小网盘的账号和密码都是admin,记得上 /html/we.dog/_h5ai/public/login.php 修改 "
 echo
