@@ -53,6 +53,7 @@ yum -y install epel-release && yum install wget git nginx nginx-mod-stream certb
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install && sed -i 's/nobody/root/g' /etc/systemd/system/xray.service
 chattr -i  /etc/selinux/config && sed -i 's/enforcing/disabled/g' /etc/selinux/config && chattr +i  /etc/selinux/config
 systemctl stop nginx && echo 1 | certbot certonly --standalone -d $DOMIN --agree-tos --email ppcert@gmail.com
+myFile="/etc/letsencrypt/live/$DOMIN/fullchain.pem"
 if [ ! -f "$myFile" ]; then
 echo "----------------------------------------------------------------------------------------------------------------------------------------------"
 echo
