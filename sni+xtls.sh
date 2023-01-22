@@ -334,7 +334,7 @@ echo
 echo "----------------------------------------------------------------------------------------------------------------------------------------------"
 echo
 echo
-echo "   客户端配置文件在 https://$DOMIN/client.json 请直接下载并在xray最新内核中使用,或v2rayN使用自定义配置 "
+echo "   客户端配置文件在 https://$DOMIN/client.json 请直接下载并在xray最新内核中使用,或v2rayN使用自定义配置${red}(xray内核版本一定要>=1.7.2 ！！！)${plain}\n "
 echo
 echo "   你的h5ai的账号和密码都是admin,记得上 /html/we.dog/_h5ai/public/login.php 修改 "
 echo
