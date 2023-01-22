@@ -235,7 +235,7 @@ echo -e "${red}未支持该系统版本，bbr启动失败，请自行启动！�
 fi
 sleep 2
 
-cat > /html/client.json <<EOF
+cat > /html/we.dog/client.json <<EOF
 {
     "log": {
         "loglevel": "warning"
