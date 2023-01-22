@@ -184,12 +184,12 @@ cat > /usr/local/etc/xray/config.json <<EOF
                 ],
                 "decryption": "none",
                 "fallbacks": [
-                       {
-                        "dest": 39999,
-                        "alpn": "h2"
-                      },
                       {
                         "dest": 39998
+                      },              
+                      {
+                        "dest": 39999,
+                        "alpn": "h2"
                       }
                     ]
                 },
