@@ -143,16 +143,31 @@ EOF
 sleep 1
 cat > /usr/local/etc/xray/config.json <<EOF
 {
+    "log": {
+        "loglevel": "warning"
+    },
+    "routing": {
+        "domainStrategy": "IPIfNonMatch",
+        "rules": [
+            {
+                "type": "field",
+                "ip": [
+                    "geoip:cn"
+                ],
+                "outboundTag": "block"
+            }
+        ]
+    },
     "inbounds": [
         {
+            "listen": "0.0.0.0",
             "port": 40000,
             "protocol": "vless",
             "settings": {
                 "clients": [
                     {
                         "id": "$UUID",
-                        "flow": "xtls-rprx-direct",
-                        "level": 0
+                        "flow": "xtls-rprx-vision",
                     }
                 ],
                 "decryption": "none",
@@ -164,11 +179,8 @@ cat > /usr/local/etc/xray/config.json <<EOF
                 },
             "streamSettings": {
                 "network": "tcp",
-                "security": "xtls",
-                "xtlsSettings": {
-                    "alpn": [
-                        "http/1.1"
-                    ],
+                "security": "tls",
+                "tlsSettings": {
                     "certificates": [
                         {
                             "certificateFile": "/etc/letsencrypt/live/$DOMIN/fullchain.pem",
@@ -176,12 +188,24 @@ cat > /usr/local/etc/xray/config.json <<EOF
                         }
                     ]
                 }
-            }
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls"
+                ]
+            }            
         }
     ],
     "outbounds": [
         {
-            "protocol": "freedom"
+            "protocol": "freedom",
+            "tag": "direct"
+        },
+        {
+            "protocol": "blackhole",
+            "tag": "block"
         }
     ]
 }
