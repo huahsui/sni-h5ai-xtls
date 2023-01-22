@@ -44,7 +44,8 @@ sleep 1
 
 if [ "$ID" == "centos" ] ; then
 setenforce 0
-iptables -F && iptables -P INPUT ACCEPT && iptables -P OUTPUT ACCEPT && iptables -P FORWARD ACCEPT && iptables-save && systemctl stop firewalld && systemctl disable firewalld
+iptables -F && iptables -P INPUT ACCEPT && iptables -P OUTPUT ACCEPT && iptables -P FORWARD ACCEPT && iptables-save
+systemctl stop firewalld && systemctl disable firewalld
 yum -y install net-tools
 kill -9 $(netstat -nlp | grep :443 | awk '{print $7}' | awk -F"/" '{ print $1 }')
 kill -9 $(netstat -nlp | grep :80 | awk '{print $7}' | awk -F"/" '{ print $1 }')
