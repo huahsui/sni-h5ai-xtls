@@ -326,6 +326,7 @@ cat > /html/client.json <<EOF
     ]
 }
 EOF
+
 echo
 echo
 echo "   恭喜，你的tcp+xtls已配置成功
