@@ -173,7 +173,8 @@ cat > /usr/local/etc/xray/config.json <<EOF
                 "decryption": "none",
                 "fallbacks": [
                                {
-                        "dest": 39999
+                        "dest": 39999,
+                        "alpn": "h2"
                       }
                     ]
                 },
@@ -181,9 +182,6 @@ cat > /usr/local/etc/xray/config.json <<EOF
                 "network": "tcp",
                 "security": "tls",
                 "tlsSettings": {
-                    "alpn": [
-                        "http/1.1"
-                    ],
                     "certificates": [
                         {
                             "certificateFile": "/etc/letsencrypt/live/$DOMIN/fullchain.pem",
@@ -237,18 +235,109 @@ echo -e "${red}未支持该系统版本，bbr启动失败，请自行启动！�
 fi
 sleep 2
 
+cat > /html/client.json <<EOF
+{
+    "log": {
+        "loglevel": "warning"
+    },
+    "routing": {
+        "domainStrategy": "IPIfNonMatch",
+        "rules": [
+            {
+                "type": "field",
+                "domain": [
+                    "geosite:cn",
+                    "geosite:private"
+                ],
+                "outboundTag": "direct"
+            },
+            {
+                "type": "field",
+                "ip": [
+                    "geoip:cn",
+                    "geoip:private"
+                ],
+                "outboundTag": "direct"
+            }
+        ]
+    },
+    "inbounds": [
+        {
+            "listen": "127.0.0.1",
+            "port": 10808,
+            "protocol": "socks",
+            "settings": {
+                "udp": true
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls"
+                ]
+            }
+        },
+        {
+            "listen": "127.0.0.1",
+            "port": 10809,
+            "protocol": "http",
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls"
+                ]
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "vless",
+            "settings": {
+                "vnext": [
+                    {
+                        "address": "$DOMIN",
+                        "port": 443,
+                        "users": [
+                            {
+                                "id": "$UUID",
+                                "encryption": "none",
+                                "flow": "xtls-rprx-vision"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "serverName": "$DOMIN",
+                    "allowInsecure": false,
+                    "fingerprint": "chrome"
+                }
+            },
+            "tag": "proxy"
+        },
+        {
+            "protocol": "freedom",
+            "tag": "direct"
+        }
+    ]
+}
+EOF
 echo
 echo
-echo "   恭喜，你的tcp+xtls已配置成功，以下为你的clash配置"
+echo "   恭喜，你的tcp+xtls已配置成功
 echo
 echo "----------------------------------------------------------------------------------------------------------------------------------------------"
-echo "- {name: tcp+xtls, server: $DOMIN, port: 443, type: vless, uuid: $UUID, flow: xtls-rprx-vision, skip-cert-verify: false, servername: $DOMIN}"
+#echo "- {name: tcp+xtls, server: $DOMIN, port: 443, type: vless, uuid: $UUID, flow: xtls-rprx-vision, skip-cert-verify: false, servername: $DOMIN}"
 echo
-echo "   clash配置文件在 https://$DOMIN/$UUID.yaml ,请直接在clash客户端中输入该网址食用，clash使用请用meta内核，自行谷歌"
+#echo "   clash配置文件在 https://$DOMIN/$UUID.yaml ,请直接在clash客户端中输入该网址食用，clash使用请用meta内核，自行谷歌"
 echo
-echo "   其他客户端请自行参考clash配置中的数据,另食用前aria2请自行下载，推荐逗大的脚本！"
+echo "   客户端配置文件在 https://$DOMIN/client.json 请直接下载并在xray最新内核中使用"
 echo
-echo "   对了你的小网盘的账号和密码都是admin,记得上 /html/we.dog/_h5ai/public/login.php 修改 "
+echo "   你的h5ai的账号和密码都是admin,记得上 /html/we.dog/_h5ai/public/login.php 修改 "
 echo
 echo "----------------------------------------------------------------------------------------------------------------------------------------------"
 echo
