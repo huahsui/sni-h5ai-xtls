@@ -329,14 +329,12 @@ EOF
 
 echo
 echo
-echo "   恭喜，你的tcp+xtls已配置成功
+echo "   恭喜，你的tcp+xtls已配置成功 "
 echo
 echo "----------------------------------------------------------------------------------------------------------------------------------------------"
-#echo "- {name: tcp+xtls, server: $DOMIN, port: 443, type: vless, uuid: $UUID, flow: xtls-rprx-vision, skip-cert-verify: false, servername: $DOMIN}"
 echo
-#echo "   clash配置文件在 https://$DOMIN/$UUID.yaml ,请直接在clash客户端中输入该网址食用，clash使用请用meta内核，自行谷歌"
 echo
-echo "   客户端配置文件在 https://$DOMIN/client.json 请直接下载并在xray最新内核中使用"
+echo "   客户端配置文件在 https://$DOMIN/client.json 请直接下载并在xray最新内核中使用,或使用v2rayN使用自定义配置 "
 echo
 echo "   你的h5ai的账号和密码都是admin,记得上 /html/we.dog/_h5ai/public/login.php 修改 "
 echo
