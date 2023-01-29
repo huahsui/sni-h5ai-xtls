@@ -122,6 +122,7 @@ cat > /etc/nginx/conf.d/h5ai.conf <<"EOF"
 server { 
                 listen 127.0.0.1:39999 http2 proxy_protocol;
                 listen 127.0.0.1:39998 proxy_protocol;
+                set_real_ip_from 127.0.0.1;
                 root /html/we.dog; 
  index index.html index.htm index.nginx-debian.html index.php /_h5ai/public/index.php;
                  location ~* \.php$ {
