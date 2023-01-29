@@ -120,19 +120,8 @@ EOF
 sleep 1
 cat > /etc/nginx/conf.d/h5ai.conf <<"EOF"
 server { 
-                listen 127.0.0.1:39999 http2;  
-                root /html/we.dog; 
- index index.html index.htm index.nginx-debian.html index.php /_h5ai/public/index.php;
-                 location ~* \.php$ {
-                    fastcgi_index   index.php;
-                    fastcgi_pass    127.0.0.1:9000;
-                    include         fastcgi_params;
-                    fastcgi_param   SCRIPT_FILENAME    $document_root$fastcgi_script_name;
-                    fastcgi_param   SCRIPT_NAME        $fastcgi_script_name;
-    }
-}
-server { 
-                listen 127.0.0.1:39998;  
+                listen 127.0.0.1:39999 http2;
+                listen 127.0.0.1:39998;
                 root /html/we.dog; 
  index index.html index.htm index.nginx-debian.html index.php /_h5ai/public/index.php;
                  location ~* \.php$ {
@@ -197,6 +186,7 @@ cat > /usr/local/etc/xray/config.json <<EOF
                 "network": "tcp",
                 "security": "tls",
                 "tlsSettings": {
+                    "minVersion": "1.2",
                     "certificates": [
                         {
                             "certificateFile": "/etc/letsencrypt/live/$DOMIN/fullchain.pem",
