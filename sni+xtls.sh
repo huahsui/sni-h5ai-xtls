@@ -120,8 +120,8 @@ EOF
 sleep 1
 cat > /etc/nginx/conf.d/h5ai.conf <<"EOF"
 server { 
-                listen 127.0.0.1:39999 http2;
-                listen 127.0.0.1:39998;
+                listen 127.0.0.1:39999 http2 proxy_protocol;
+                listen 127.0.0.1:39998 proxy_protocol;
                 root /html/we.dog; 
  index index.html index.htm index.nginx-debian.html index.php /_h5ai/public/index.php;
                  location ~* \.php$ {
@@ -174,11 +174,13 @@ cat > /usr/local/etc/xray/config.json <<EOF
                 "decryption": "none",
                 "fallbacks": [
                       {
-                        "dest": 39998
+                        "dest": 39998,
+                        "xver": 1
                       },              
                       {
                         "dest": 39999,
-                        "alpn": "h2"
+                        "alpn": "h2",
+                        "xver": 1
                       }
                     ]
                 },
