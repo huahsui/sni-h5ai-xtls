@@ -145,7 +145,7 @@ stream {
 EOF
 
 sleep 1
-cat > /etc/nginx/conf.d/h5ai.conf <<"EOF"
+cat > /etc/nginx/conf.d/h5ai.conf <<EOF
 server { 
                 server_name $DOMIN;
                 listen 127.0.0.1:39999 ssl http2 proxy_protocol;
@@ -162,12 +162,12 @@ server {
 
         add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
         
-                 location ~* \.php$ {
+                 location ~* \.php\$ {
                     fastcgi_index   index.php;
                     fastcgi_pass    127.0.0.1:9000;
                     include         fastcgi_params;
-                    fastcgi_param   SCRIPT_FILENAME    $document_root$fastcgi_script_name;
-                    fastcgi_param   SCRIPT_NAME        $fastcgi_script_name;
+                    fastcgi_param   SCRIPT_FILENAME    \$document_root\$fastcgi_script_name;
+                    fastcgi_param   SCRIPT_NAME        \$fastcgi_script_name;
     }
 }
 EOF
