@@ -472,21 +472,26 @@ EOF
 echo "----------------------------------------------------------------------------------------------------------------------------------------------"
 echo
 echo -e "\033[36m\033[1m                                          恭喜，你的nginx+reality已配置成功                                            \033[0m"
-echo -e "\033[36m  你的h5ai的账号和密码都是admin,记得上 /html/we.dog/_h5ai/public/login.php 修改 \033[0m"
+echo -e "\033[36m   你的h5ai的账号和密码都是admin,记得上 /html/we.dog/_h5ai/public/login.php 修改 \033[0m"
 echo
 echo "----------------------------------------------------------------------------------------------------------------------------------------------"
 echo
-echo "客户端配置文件在 https://$DOMIN/client.json 请直接下载，电脑端使用见以下说明 "
+echo "  客户端配置文件在 https://$DOMIN/client.json 请直接下载，电脑端使用见以下说明 "
 echo -e "\033[31m\033[1m                                          v2rayN使用新版内核和自定义配置                                               \033[0m"
-echo "https://github.com/2dust/v2rayN/releases/download/5.39/v2rayN.zip"
-echo "https://github.com/huahsui/tcp-xtls/blob/gh-pages/Xray-windows-64.zip"
-echo "1、先下载以上内核和v2rayN,然后解压v2rayN,并把Xray-windows-64压缩包里的文件复制进v2rayN文件夹。"
-echo "2、打开v2rayN.exe,左上角依次选择 服务器 ——> 添加自定义配置服务器 ——> 浏览（打开客户端配置文件) ——> core类型（选xray） ——> 确定"
+echo "  https://github.com/2dust/v2rayN/releases/download/5.39/v2rayN.zip"
+echo "  https://github.com/huahsui/tcp-xtls/blob/gh-pages/Xray-windows-64.zip"
+echo "  1、先下载以上内核和v2rayN,然后解压v2rayN,并把Xray-windows-64压缩包里的文件复制进v2rayN文件夹。"
+echo "  2、打开v2rayN.exe,左上角依次选择 服务器 ——> 添加自定义配置服务器 ——> 浏览（打开客户端配置文件) ——> core类型（选xray） ——> 确定"
 echo
 echo "----------------------------------------------------------------------------------------------------------------------------------------------"
 echo
-echo "SFI配置文件在 https://$DOMIN/singbox.json IOS端可通过SFI使用，请直接下载并导入SFI， "
-echo "关于sfi的安装可看这里：https://sing-box.sagernet.org/zh/installation/clients/sfi/"
+echo "  SFI配置文件在 https://$DOMIN/singbox.json IOS端可通过SFI使用，请直接下载并导入SFI， "
+echo "  关于sfi的安装可看这里：https://sing-box.sagernet.org/zh/installation/clients/sfi/"
+echo
+echo "----------------------------------------------------------------------------------------------------------------------------------------------"
+echo
+echo -e "\033[35m   以下为clash meta配置，可在openwrt等客户端使用"
+echo "  - {name: Reality, server: $Zero, port: 443, type: vless, uuid: $UUID, network: tcp, tls: true, flow: xtls-rprx-vision, client-fingerprint: chrome, reality-opts: {server-name: $DOMIN, public-key: $Two, short-id: 12a34b56c78d1a2b}}
 echo
 echo "----------------------------------------------------------------------------------------------------------------------------------------------"
 
