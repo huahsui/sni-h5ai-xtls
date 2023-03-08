@@ -220,7 +220,7 @@ cat > /usr/local/etc/xray/config.json <<EOF
                   "xver": 1,
                   "serverNames":["$DOMIN"],
                   "privateKey":"$One",
-                  "shortIds":[""]
+                  "shortIds":["12a34b56c78d1a2b"]
                 }
             },
             "sniffing": {
@@ -349,7 +349,7 @@ cat > /html/we.dog/client.json <<EOF
                   "serverName": "$DOMIN",
                   "fingerprint": "chrome", 
                   "publicKey":"$Two", 
-                  "shortId":"", 
+                  "shortId":"12a34b56c78d1a2b", 
                   "spiderX":"/"
                 }
             },
@@ -362,19 +362,132 @@ cat > /html/we.dog/client.json <<EOF
     ]
 }
 EOF
+sleep 1
 
+cat > /html/we.dog/singbox.json <<EOF
+{
+  "log": {
+    "level": "info",
+    "timestamp": true
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "cloudflare",
+        "address": "https://1.1.1.1/dns-query"
+      },
+      {
+        "tag": "dnspod",
+        "address": "https://1.12.12.12/dns-query",
+        "detour": "direct"
+      },
+      {
+        "tag": "block",
+        "address": "rcode://success"
+      }
+    ],
+    "rules": [
+      {
+        "geosite": "cn",
+        "server": "dnspod"
+      },
+      {
+        "geosite": "category-ads-all",
+        "server": "block",
+        "disable_cache": true
+      }
+    ]
+  },
+  "inbounds": [
+    {
+      "type": "tun",
+      "tag": "tun-in",
+      "interface_name": "tun0",
+      "inet4_address": "172.19.0.1/30",
+      "auto_route": true,
+      "strict_route": true,
+      "stack": "gvisor",
+      "sniff": true
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "vless",
+      "tag": "vless-out",
+      "server": "$Zero",
+      "server_port": 443,
+      "uuid": "$UUID",
+      "flow": "xtls-rprx-vision",
+      "network": "tcp",
+      "tls": {
+        "enabled": true,
+        "server_name": "$DOMIN",
+        "utls": {
+      	  "enabled": true,
+      	  "fingerprint": "safari"
+         },
+        "reality": {
+      	  "enabled": true,
+      	  "public_key": "$Two",
+      	  "short_id": "12a34b56c78d1a2b"
+        }
+      }
+    },
+    {
+      "type": "direct",
+      "tag": "direct"
+    },
+    {
+      "type": "block",
+      "tag": "block"
+    },
+    {
+      "type": "dns",
+      "tag": "dns"
+    }
+  ],
+  "route": {
+    "rules": [
+      {
+        "protocol": "dns",
+        "outbound": "dns"
+      },
+      {
+        "geosite": "cn",
+        "geoip": [
+          "cn",
+          "private"
+        ],
+        "outbound": "direct"
+      },
+      {
+        "geosite": "category-ads-all",
+        "outbound": "block"
+      }
+    ]
+  }
+}
+EOF
+
+echo "----------------------------------------------------------------------------------------------------------------------------------------------"
 echo
-echo
-echo "   恭喜，你的nginx+reality已配置成功 "
+echo -e "\033[36m\033[1m                 恭喜，你的nginx+reality已配置成功                      \033[0m"
+echo -e "\033[36m  你的h5ai的账号和密码都是admin,记得上 /html/we.dog/_h5ai/public/login.php 修改 \033[0m"
 echo
 echo "----------------------------------------------------------------------------------------------------------------------------------------------"
 echo
-echo
-echo "   客户端配置文件在 https://$DOMIN/client.json 请直接下载并在xray最新内核中使用,或v2rayN使用自定义配置 "
-echo "   xray内核版本一定要>1.7.5 ！！！"
-echo
-echo "   你的h5ai的账号和密码都是admin,记得上 /html/we.dog/_h5ai/public/login.php 修改 "
+echo "客户端配置文件在 https://$DOMIN/client.json 请直接下载，电脑端使用见以下说明 "
+echo -e "\033[31m\033[1m                                          v2rayN使用新版内核和自定义配置                                               \033[0m"
+echo "https://github.com/2dust/v2rayN/releases/download/5.39/v2rayN.zip"
+echo "https://github.com/huahsui/tcp-xtls/blob/gh-pages/Xray-windows-64.zip"
+echo "1、先下载以上内核和v2rayN,然后解压v2rayN,并把Xray-windows-64压缩包里的文件复制进v2rayN文件夹。"
+echo "2、打开v2rayN.exe,左上角依次选择 服务器 ——> 添加自定义配置服务器 ——> 浏览（打开客户端配置文件) ——> core类型（选xray） ——> 确定"
 echo
 echo "----------------------------------------------------------------------------------------------------------------------------------------------"
 echo
+echo "SFI配置文件在 https://$DOMIN/singbox.json IOS端可通过SFI使用，请直接下载并导入SFI， "
+echo "关于sfi的安装可看这里：https://sing-box.sagernet.org/zh/installation/clients/sfi/"
+echo
+echo "----------------------------------------------------------------------------------------------------------------------------------------------"
+
 # END
