@@ -55,7 +55,7 @@ kill -9 $(netstat -nlp | grep :443 | awk '{print $7}' | awk -F"/" '{ print $1 }'
 kill -9 $(netstat -nlp | grep :80 | awk '{print $7}' | awk -F"/" '{ print $1 }')
 kill -9 $(netstat -nlp | grep :40000 | awk '{print $7}' | awk -F"/" '{ print $1 }')
 yum -y install epel-release && yum install wget git nginx nginx-mod-stream certbot curl -y && rm -rf /html/* && mkdir -p /html/we.dog && cd /html/we.dog && git clone https://github.com/Pearlulu/h5ai_dplayer.git && mv h5ai_dplayer/_h5ai ./ && rm -rf /etc/nginx/sites-enabled/default
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install && sed -i 's/nobody/root/g' /etc/systemd/system/xray.service
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --beta && sed -i 's/nobody/root/g' /etc/systemd/system/xray.service
 chattr -i  /etc/selinux/config && sed -i 's/enforcing/disabled/g' /etc/selinux/config && chattr +i  /etc/selinux/config
 systemctl stop nginx && echo 1 | certbot certonly --standalone -d $DOMIN --agree-tos --email ppcert@gmail.com
 myFile="/etc/letsencrypt/live/$DOMIN/fullchain.pem"
@@ -68,7 +68,6 @@ echo "--------------------------------------------------------------------------
 sleep 2
 exit 1
 fi
-rm -rf /usr/local/bin/xray && wget https://github.com/huahsui/tcp-xtls/raw/gh-pages/xray && mv xray /usr/local/bin/xray && chmod +x /usr/local/bin/xray
 echo "----------------------------------------------------------------------------------------------------------------------------------------------"
 /usr/local/bin/xray x25519
 echo "----------------------------------------------------------------------------------------------------------------------------------------------"
@@ -88,7 +87,7 @@ kill -9 $(netstat -nlp | grep :443 | awk '{print $7}' | awk -F"/" '{ print $1 }'
 kill -9 $(netstat -nlp | grep :80 | awk '{print $7}' | awk -F"/" '{ print $1 }')
 kill -9 $(netstat -nlp | grep :40000 | awk '{print $7}' | awk -F"/" '{ print $1 }')
 apt install wget git nginx certbot curl -y && rm -rf /html/* && mkdir -p /html/we.dog && cd /html/we.dog && git clone https://github.com/Pearlulu/h5ai_dplayer.git && mv h5ai_dplayer/_h5ai ./ && rm -rf /etc/nginx/sites-enabled/default
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install && sed -i 's/nobody/root/g' /etc/systemd/system/xray.service
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --beta && sed -i 's/nobody/root/g' /etc/systemd/system/xray.service
 systemctl stop nginx && echo 1 | certbot certonly --standalone -d $DOMIN --agree-tos --email ppcert@gmail.com
 myFile="/etc/letsencrypt/live/$DOMIN/fullchain.pem"
 if [ ! -f "$myFile" ]; then
@@ -100,7 +99,6 @@ echo "--------------------------------------------------------------------------
 sleep 2
 exit 1
 fi
-rm -rf /usr/local/bin/xray && wget https://github.com/huahsui/tcp-xtls/raw/gh-pages/xray && mv xray /usr/local/bin/xray && chmod +x /usr/local/bin/xray
 echo "----------------------------------------------------------------------------------------------------------------------------------------------"
 /usr/local/bin/xray x25519
 echo "----------------------------------------------------------------------------------------------------------------------------------------------"
@@ -479,7 +477,7 @@ echo
 echo "  客户端配置文件在 https://$DOMIN/client.json 请直接下载，电脑端使用见以下说明 "
 echo -e "\033[31m\033[1m                                          v2rayN使用新版内核和自定义配置                                               \033[0m"
 echo "  https://github.com/2dust/v2rayN/releases/download/5.39/v2rayN.zip"
-echo "  https://github.com/huahsui/tcp-xtls/blob/gh-pages/Xray-windows-64.zip"
+echo "  https://github.com/XTLS/Xray-core/releases/tag/v1.8.0"
 echo "  1、先下载以上内核和v2rayN,然后解压v2rayN,并把Xray-windows-64压缩包里的文件复制进v2rayN文件夹。"
 echo "  2、打开v2rayN.exe,左上角依次选择 服务器 ——> 添加自定义配置服务器 ——> 浏览（打开客户端配置文件) ——> core类型（选xray） ——> 确定"
 echo
