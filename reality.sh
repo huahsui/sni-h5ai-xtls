@@ -218,7 +218,7 @@ cat > /usr/local/etc/xray/config.json <<EOF
                   "xver": 1,
                   "serverNames":["$DOMIN"],
                   "privateKey":"$One",
-                  "shortIds":["12a34b56c78d1a2b"]
+                  "shortIds":["12345678","12a34b56c78d1a2b"]
                 }
             },
             "sniffing": {
@@ -347,7 +347,7 @@ cat > /html/we.dog/client.json <<EOF
                   "serverName": "$DOMIN",
                   "fingerprint": "chrome", 
                   "publicKey":"$Two", 
-                  "shortId":"12a34b56c78d1a2b", 
+                  "shortId":"12345678", 
                   "spiderX":"/"
                 }
             },
@@ -489,7 +489,7 @@ echo
 echo "----------------------------------------------------------------------------------------------------------------------------------------------"
 echo
 echo -e "\033[35m   以下为clash meta配置，可在openwrt等客户端使用"
-echo "  - {name: Reality, server: $DOMIN, port: 443, type: vless, uuid: $UUID, network: tcp, tls: true, udp: true, flow: xtls-rprx-vision, server-name: $DOMIN, reality-opts: {public-key: $Two, short-id: 12a34b56c78d1a2b}, client-fingerprint: chrome}  "
+echo "  - {name: Reality, server: $DOMIN, port: 443, type: vless, uuid: $UUID, network: tcp, tls: true, udp: true, flow: xtls-rprx-vision, servername: $DOMIN, reality-opts: {public-key: $Two, short-id: 12345678}, client-fingerprint: chrome}  "
 echo
 echo "----------------------------------------------------------------------------------------------------------------------------------------------"
 
