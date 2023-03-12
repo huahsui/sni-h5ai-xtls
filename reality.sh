@@ -249,7 +249,7 @@ sleep 2
 systemctl daemon-reload && systemctl restart xray && systemctl enable xray && systemctl restart nginx
 systemctl enable nginx && touch cronfile && echo '15 2 * */2 * root certbot renew --pre-hook "systemctl stop nginx" --post-hook "systemctl start nginx"' > ./cronfile && crontab -u root ./cronfile
 sleep 1
-wget -N --no-check-certificate -q -O /html/we.dog/$UUID.yaml "https://raw.githubusercontent.com/huahsui/sni-h5ai-xtls/main/clash.yaml" && sed -i '32 i\  - {name: tcp+xtls, server: '$DOMIN', port: 443, type: vless, uuid: '$UUID', flow: xtls-rprx-vision, skip-cert-verify: false, servername: '$DOMIN'}' /html/we.dog/$UUID.yaml
+wget -N --no-check-certificate -q -O /html/we.dog/$UUID.yaml "https://raw.githubusercontent.com/huahsui/sni-h5ai-xtls/main/clash.yaml" && sed -i '32 i\  - {name: tcp+xtls, server: $DOMIN, port: 443, type: vless, uuid: $UUID, network: tcp, tls: true, udp: true, flow: xtls-rprx-vision, servername: $DOMIN, reality-opts: {public-key: $Two, short-id: 12345678}, client-fingerprint: chrome}' /html/we.dog/$UUID.yaml
 sleep 1
 clear
 
@@ -488,7 +488,7 @@ echo "  关于sfi的安装可看这里：https://sing-box.sagernet.org/zh/instal
 echo
 echo "----------------------------------------------------------------------------------------------------------------------------------------------"
 echo
-echo -e "\033[35m   以下为clash meta配置，可在openwrt等客户端使用"
+echo -e "\033[35m   以下为clash meta配置，可在openwrt等客户端使用 (也可直接使用该配置https://$DOMIN/$UUID.yaml)"
 echo "  - {name: Reality, server: $DOMIN, port: 443, type: vless, uuid: $UUID, network: tcp, tls: true, udp: true, flow: xtls-rprx-vision, servername: $DOMIN, reality-opts: {public-key: $Two, short-id: 12345678}, client-fingerprint: chrome}  "
 echo
 echo "----------------------------------------------------------------------------------------------------------------------------------------------"
