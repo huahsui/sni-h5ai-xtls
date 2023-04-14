@@ -249,7 +249,7 @@ sleep 2
 systemctl daemon-reload && systemctl restart xray && systemctl enable xray && systemctl restart nginx
 systemctl enable nginx && touch cronfile && echo '15 2 * */2 * root certbot renew --pre-hook "systemctl stop nginx" --post-hook "systemctl start nginx"' > ./cronfile && crontab -u root ./cronfile
 sleep 1
-wget -N --no-check-certificate -q -O /html/we.dog/$UUID.yaml "https://raw.githubusercontent.com/huahsui/tcp-xtls/gh-pages/clash.yaml" && sed -i '51 i\  - {name: tcp+xtls, server: $DOMIN, port: 443, type: vless, uuid: $UUID, network: tcp, tls: true, udp: true, flow: xtls-rprx-vision, servername: $DOMIN, reality-opts: {public-key: $Two, short-id: 12345678}, client-fingerprint: chrome}' /html/we.dog/$UUID.yaml
+wget -N --no-check-certificate -q -O /html/we.dog/$UUID.yaml "https://raw.githubusercontent.com/huahsui/tcp-xtls/gh-pages/clash.yaml" && sed -i '51 i\  - {name: tcp+xtls, server: '$DOMIN', port: 443, type: vless, uuid: '$UUID', network: tcp, tls: true, udp: true, flow: xtls-rprx-vision, servername: '$DOMIN', reality-opts: {public-key: '$Two', short-id: 12345678}, client-fingerprint: chrome}' /html/we.dog/$UUID.yaml
 sleep 1
 clear
 
