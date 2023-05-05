@@ -54,7 +54,7 @@ yum -y install net-tools
 kill -9 $(netstat -nlp | grep :443 | awk '{print $7}' | awk -F"/" '{ print $1 }')
 kill -9 $(netstat -nlp | grep :80 | awk '{print $7}' | awk -F"/" '{ print $1 }')
 kill -9 $(netstat -nlp | grep :40000 | awk '{print $7}' | awk -F"/" '{ print $1 }')
-yum -y install epel-release && yum install wget git nginx nginx-mod-stream certbot curl -y && rm -rf /html/* && mkdir -p /html/we.dog && cd /html/we.dog && git clone https://github.com/Pearlulu/h5ai_dplayer.git && mv h5ai_dplayer/_h5ai ./ && rm -rf /etc/nginx/sites-enabled/default
+yum -y install epel-release sudo && yum install wget git nginx nginx-mod-stream certbot curl -y && rm -rf /html/* && mkdir -p /html/we.dog && cd /html/we.dog && git clone https://github.com/Pearlulu/h5ai_dplayer.git && mv h5ai_dplayer/_h5ai ./ && rm -rf /etc/nginx/sites-enabled/default
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --beta && sed -i 's/nobody/root/g' /etc/systemd/system/xray.service
 chattr -i  /etc/selinux/config && sed -i 's/enforcing/disabled/g' /etc/selinux/config && chattr +i  /etc/selinux/config
 systemctl stop nginx && echo 1 | certbot certonly --standalone -d $DOMIN --agree-tos --email ppcert@gmail.com
@@ -86,7 +86,7 @@ apt install net-tools -y
 kill -9 $(netstat -nlp | grep :443 | awk '{print $7}' | awk -F"/" '{ print $1 }')
 kill -9 $(netstat -nlp | grep :80 | awk '{print $7}' | awk -F"/" '{ print $1 }')
 kill -9 $(netstat -nlp | grep :40000 | awk '{print $7}' | awk -F"/" '{ print $1 }')
-apt install wget git nginx certbot curl -y && rm -rf /html/* && mkdir -p /html/we.dog && cd /html/we.dog && git clone https://github.com/Pearlulu/h5ai_dplayer.git && mv h5ai_dplayer/_h5ai ./ && rm -rf /etc/nginx/sites-enabled/default
+apt install wget git nginx certbot curl sudo -y && rm -rf /html/* && mkdir -p /html/we.dog && cd /html/we.dog && git clone https://github.com/Pearlulu/h5ai_dplayer.git && mv h5ai_dplayer/_h5ai ./ && rm -rf /etc/nginx/sites-enabled/default
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --beta && sed -i 's/nobody/root/g' /etc/systemd/system/xray.service
 systemctl stop nginx && echo 1 | certbot certonly --standalone -d $DOMIN --agree-tos --email ppcert@gmail.com
 myFile="/etc/letsencrypt/live/$DOMIN/fullchain.pem"
@@ -247,7 +247,9 @@ echo
 echo "已写入完成，正在启动与设置证书自更"
 sleep 2
 systemctl daemon-reload && systemctl restart xray && systemctl enable xray && systemctl restart nginx
-systemctl enable nginx && touch cronfile && echo '15 2 * */2 * root certbot renew --pre-hook "systemctl stop nginx" --post-hook "systemctl start nginx"' > ./cronfile && crontab -u root ./cronfile
+systemctl enable nginx
+wget -N --no-check-certificate -q -O /root/renew.sh "https://raw.githubusercontent.com/huahsui/tcp-xtls/gh-pages/renew.sh" && chmod +x /root/renew.sh
+touch cronfile && echo '15 2 * * 1 /root/renew.sh >> /var/log/certbot_renewal.log 2>&1' > ./cronfile && crontab -u root ./cronfile
 sleep 1
 wget -N --no-check-certificate -q -O /html/we.dog/$UUID.yaml "https://raw.githubusercontent.com/huahsui/tcp-xtls/gh-pages/clash.yaml" && sed -i '51 i\  - {name: tcp+xtls, server: '$DOMIN', port: 443, type: vless, uuid: '$UUID', network: tcp, tls: true, udp: true, flow: xtls-rprx-vision, servername: '$DOMIN', reality-opts: {public-key: '$Two', short-id: 12345678}, client-fingerprint: chrome}' /html/we.dog/$UUID.yaml
 sleep 1
